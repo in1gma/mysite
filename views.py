@@ -219,3 +219,214 @@ def delete_master(request, master_id):
 		#master.delete()
 		Master.objects.deleteById(master_id)
 	return redirect('/labbd/masters/')
+
+#!!!!!!!!!!!!!!!!!!!!!!
+#ЗАПРОСЫ, СДЕЛАНЫ НЕ ОЧ
+#!!!!!!!!!!!!!!!!!!!!!!
+def show_queries(request):
+	return render_to_response('labbd2_queries.html')
+
+def show_query(request, query_id):
+	args = {}
+	args.update(csrf(request))
+	args['form'] = QueryFormList.queries[query_id]
+	args['number'] = query_id
+	return render_to_response('labbd2_query.html', args)
+
+def show_exec_query01(request):
+	number = '1'
+	if request.POST:
+		#form = Query01Form(request.POST)
+		form = QueryFormList.queries[number](request.POST)
+		if form.is_valid():
+			cd = form.cleaned_data
+			
+			master = cd.get('master')
+
+			args = {}
+
+			_startTime = time.time()
+
+			args['number'] = number
+			args['objs'] = Order.objects.raw('''
+				select "labbd_client"."id" as "id", "labbd_client"."_surname" as "surname", sum("labbd_hairstyle"."_value") as "summ"
+				from "labbd_client", "labbd_order", "labbd_hairstyle"
+				where "labbd_order"."_client_id" = "labbd_client"."id" 
+					and "labbd_order"."_hairstyle_id" = "labbd_hairstyle"."id" 
+					and "labbd_order"."_master_id" = %s 
+				group by "labbd_client"."id"
+			''' % master.getId())
+
+			args['time'] = "{:.7f} sec".format(time.time() - _startTime)
+
+	return render_to_response('labbd2_show_query01.html', args)
+
+def show_exec_query02(request):
+	number = '2'
+	if request.POST:
+		form = QueryFormList.queries[number](request.POST)
+		if form.is_valid():
+			cd = form.cleaned_data
+			
+			client = cd.get('client')
+
+			args = {}
+
+			_startTime = time.time()
+
+			args['number'] = number
+			args['client'] = client
+			args['objs'] = Order.objects.raw('''
+				select "labbd_master"."id" as "id", "labbd_master"."_surname" as "surname", "labbd_master"."_stage" as "stage"
+				from "labbd_client", "labbd_order", "labbd_master", "labbd_hairstyle" 
+				where "labbd_order"."_master_id" = "labbd_master"."id" 
+					and "labbd_order"."_hairstyle_id" = "labbd_hairstyle"."id" 
+					and "labbd_order"."_client_id" = "labbd_client"."id"
+					and "labbd_client"."id" = %s
+				group by "labbd_master"."id"
+			''' % client.getId())
+
+			args['time'] = "{:.7f} sec".format(time.time() - _startTime)
+
+	return render_to_response('labbd2_show_query02.html', args)
+
+def show_exec_query03(request):
+	number = '3'
+	if request.POST:
+		form = QueryFormList.queries[number](request.POST)
+		if form.is_valid():
+			cd = form.cleaned_data
+			
+			client = cd.get('client')
+			master = cd.get('master')
+
+			args = {}
+
+			_startTime = time.time()
+			
+			args['number'] = number
+			args['client'] = client
+			args['master'] = master
+
+			args['objs'] = Order.objects.raw('''
+				select "labbd_hairstyle"."id" as "id", "labbd_hairstyle"."_title" as "title"
+				from "labbd_client", "labbd_order", "labbd_master", "labbd_hairstyle" 
+				where "labbd_order"."_master_id" = "labbd_master"."id"
+					and "labbd_order"."_hairstyle_id" = "labbd_hairstyle"."id" 
+					and "labbd_order"."_client_id" = "labbd_client"."id"
+					and "labbd_master"."id" = {0}
+					and "labbd_client"."id" = {1}
+				group by "labbd_hairstyle"."id"
+			'''.format(master.getId(), client.getId()))
+
+			args['time'] = "{:.7f} sec".format(time.time() - _startTime)
+
+	return render_to_response('labbd2_show_query03.html', args)
+
+def show_exec_query04(request):
+	args = {}
+	#!!!
+
+	_startTime = time.time()
+
+	args['number'] = '4'
+	args['objs'] = Order.objects.raw('''
+		select "labbd_master"."id" as "id", "labbd_master"."_surname" as "surname", "labbd_master"."_name" as "name", "labbd_master"."_patronymic" as "patronymic", "labbd_master"."_stage" as "stage", sum("labbd_hairstyle"."_value") as "summ"
+		from "labbd_client", "labbd_order", "labbd_master", "labbd_hairstyle" 
+		where "labbd_order"."_master_id" = "labbd_master"."id"
+			and "labbd_order"."_hairstyle_id" = "labbd_hairstyle"."id" 
+			and "labbd_order"."_client_id" = "labbd_client"."id"
+		group by "labbd_master"."id"
+		order by "summ" desc
+		limit 1
+	''')
+
+	args['time'] = "{:.7f} sec".format(time.time() - _startTime)
+
+	return render_to_response('labbd2_show_query04.html', args)
+
+def show_exec_query05(request):
+	args = {}
+
+	_startTime = time.time()
+
+	args['number'] = '5'
+	args['objs'] = Order.objects.raw('''
+		select "id", "surname", "countt" from 
+		(select "id", "surname", count("id2") as "countt" from 
+			(select "labbd_master"."id" as "id", "labbd_master"."_surname" as "surname", "labbd_master"."_stage" as "stage", "labbd_hairstyle"."id" as "id2"
+			from "labbd_client", "labbd_order", "labbd_master", "labbd_hairstyle" 
+			where "labbd_order"."_master_id" = "labbd_master"."id"
+				and "labbd_order"."_hairstyle_id" = "labbd_hairstyle"."id" 
+				and "labbd_order"."_client_id" = "labbd_client"."id"
+			group by "labbd_master"."id", "labbd_hairstyle"."id") as "subquery"
+		group by "id", "surname") as "subquery2"
+		where "countt" = (select count("labbd_hairstyle"."id") from "labbd_hairstyle")
+	''')
+
+	args['time'] = "{:.7f} sec".format(time.time() - _startTime)
+
+	return render_to_response('labbd2_show_query05.html', args)
+
+def show_exec_query06(request):
+	number = '6'
+	if request.POST:
+		form = QueryFormList.queries[number](request.POST)
+		if form.is_valid():
+			cd = form.cleaned_data
+			
+			client = cd.get('client')
+
+			args = {}
+
+			_startTime = time.time()
+
+			args['number'] = number
+			args['client'] = client
+
+			args['objs'] = Order.objects.raw('''
+				select "labbd_hairstyle"."_title" as "title", "labbd_hairstyle"."id" 
+				from "labbd_hairstyle"
+				except
+				select "labbd_hairstyle"."_title" as "title", "labbd_hairstyle"."id"
+				from "labbd_client", "labbd_order", "labbd_hairstyle", "labbd_master"
+				where "labbd_order"."_client_id" = "labbd_client"."id" 
+					and "labbd_order"."_hairstyle_id" = "labbd_hairstyle"."id" 
+					and "labbd_order"."_master_id" = "labbd_master"."id"
+					and "labbd_client"."id" = %s
+				group by "labbd_client"."id", "labbd_hairstyle"."_title", "labbd_hairstyle"."id"
+			''' % client.getId())
+
+			args['time'] = "{:.7f} sec".format(time.time() - _startTime)
+
+	return render_to_response('labbd2_show_query06.html', args)
+
+def show_exec_query07(request):
+	args = {}
+
+	args['number'] = '7'
+
+	_startTime = time.time()
+
+	args['objs'] = Order.objects.raw('''
+		select "id", "surname", "summ" from 
+			(select "labbd_client"."id" as "id", "labbd_client"."_surname" as "surname", sum("labbd_hairstyle"."_value") as "summ"
+			from "labbd_client", "labbd_order", "labbd_hairstyle", "labbd_master"
+			where "labbd_order"."_client_id" = "labbd_client"."id" 
+				and "labbd_order"."_hairstyle_id" = "labbd_hairstyle"."id" 
+				and "labbd_order"."_master_id" = "labbd_master"."id"
+				and "labbd_client"."id" = "labbd_client"."id"
+			group by "labbd_client"."id") as "subquery"
+		where "summ" = (select max("summ") from 
+			(select "labbd_client"."id" as "id", "labbd_client"."_surname" as "surname", sum("labbd_hairstyle"."_value") as "summ"
+			from "labbd_client", "labbd_order", "labbd_hairstyle", "labbd_master"
+			where "labbd_order"."_client_id" = "labbd_client"."id" 
+				and "labbd_order"."_hairstyle_id" = "labbd_hairstyle"."id" 
+				and "labbd_order"."_master_id" = "labbd_master"."id"
+				and "labbd_client"."id" = "labbd_client"."id"
+			group by "labbd_client"."id") as "subquery")
+	''')
+
+	args['time'] = "{:.7f} sec".format(time.time() - _startTime)
+
+	return render_to_response('labbd2_show_query07.html', args)
