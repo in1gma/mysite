@@ -8,9 +8,42 @@ from django.core.validators import RegexValidator
 
 # Create your models here.
 class Person(models.Model):
-	_surname = models.CharField(max_length = 150, verbose_name = "Фамилия")
-	_name = models.CharField(max_length = 150, verbose_name = "Имя")
-	_patronymic = models.CharField(max_length = 150, verbose_name = "Отчество")
+	_surname = models.CharField(
+		max_length = 150, 
+		verbose_name = "Фамилия", 
+		validators=[
+			RegexValidator(
+				regex='^[а-яА-Я]+$',
+				message='Фамилия содержит недопустимые символы!',
+				code='invalid_surname'
+			)
+		]
+	)
+
+	_name = models.CharField(
+		max_length = 150,
+		verbose_name = "Имя",
+		validators=[
+			RegexValidator(
+				regex='^[а-яА-Я]+$',
+				message='Имя содержит недопустимые символы!',
+				code='invalid_name'
+			)
+		]
+	)
+
+	_patronymic = models.CharField(
+		max_length = 150, 
+		verbose_name = "Отчество", 
+		validators=[
+			RegexValidator(
+				regex='^[а-яА-Я]+$',
+				message='Отчество содержит недопустимые символы!',
+				code='invalid_patronymic'
+			)
+		]
+	)
+
 	_age = models.PositiveIntegerField(default = 0, verbose_name = "Возраст")
 
 	@property
