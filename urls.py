@@ -2,9 +2,6 @@ from django.conf.urls import url
 import labbd.views
 
 urlpatterns = [
-    #url(r'^1/', labbd.views.show),
-    #url(r'^2/', labbd.views.show2),
-    #url(r'^3/', labbd.views.show3),
     url(r'^$', labbd.views.show),
     url(r'^orders/$', labbd.views.show_orders),
     url(r'^orders/add/$', labbd.views.show_add_order),
@@ -31,4 +28,13 @@ urlpatterns = [
     url(r'^masters/(?P<master_id>\d+)/delete/$', labbd.views.delete_master),
     url(r'^masters/add/$', labbd.views.show_add_master),
     url(r'^masters/add/update/$', labbd.views.add_master),
+    url(r'^queries/$', labbd.views.show_queries),
+    url(r'^queries/(?P<query_id>\d+)/$', labbd.views.show_query),
+    url(r'^queries/1/show/$', labbd.views.show_exec_query01),
+    url(r'^queries/2/show/$', labbd.views.show_exec_query02),
+    url(r'^queries/3/show/$', labbd.views.show_exec_query03),
+    url(r'^queries/4/show/$', labbd.views.show_exec_query04),
+    url(r'^queries/5/show/$', labbd.views.show_exec_query05),
+    url(r'^queries/6/show/$', labbd.views.show_exec_query06),
+    url(r'^queries/7/show/$', labbd.views.show_exec_query07),
 ]
