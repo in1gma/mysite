@@ -1,0 +1,14 @@
+{% extends "labbd.html" %}
+{% block hairstyles %}
+<section>
+	<h2>Список причесок</h2>
+	<h4><a href="/labbd/hairstyles/add/">Добавить прическу</a></h4>
+	{% for hairstyle in hairstyles %}
+		<h3><a href="/labbd/hairstyles/{{ hairstyle.id }}">Прическа №{{ hairstyle.getId }}</a></h3>
+		<p>Название: {{ hairstyle.title }}</p>
+		<p>Цена: {{ hairstyle.value }} руб.</p>
+		<p>Время: {{ hairstyle.time }}</p>
+		<hr>
+	{% endfor %}
+</section>
+{% endblock %}

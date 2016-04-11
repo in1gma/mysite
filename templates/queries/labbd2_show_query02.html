@@ -1,0 +1,22 @@
+{% extends "labbd2_show_query.html" %}
+{% block query02 %}
+	<table border="1" width="30%">
+		<tr align="center">
+			<td colspan="3"><b>Клиент №{{ client.id }} </b><a href="/labbd/clients/{{ client.id }}">{{ client }}</a></td>
+		</tr>
+		<tr align="center">
+			<!--td>Клиент №{{ client.id }}<b><a href="/labbd/clients/{{ client.id }}">{{ client }}</a></b></td-->
+			<td><b>Мастер №</b></td>
+			<td><b>Фамилия</b></td>
+			<td><b>Стаж</b></td>
+		</tr>
+		{% for obj in objs %}
+			<tr align="center">
+				<td>{{ obj.id }}</td>
+				<td><a href="/labbd/masters/{{ obj.id }}">{{ obj.surname }}</a></td>
+				<td>{{ obj.stage }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+	<p>Время выполнения: {{ time }}</p>
+{% endblock %}

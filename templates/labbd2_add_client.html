@@ -1,0 +1,11 @@
+{% extends "labbd.html" %}
+{% block addclient %}
+<section>
+	<h3>Добавить клиента</h3>
+	<form action="/labbd/clients/add/update/" method="post">
+		{% csrf_token %}
+		{{ form }}
+		<input type="submit" class="button" value="Добавить"></input>
+	</form>
+</section>
+{% endblock %}

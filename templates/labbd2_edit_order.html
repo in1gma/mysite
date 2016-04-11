@@ -1,0 +1,14 @@
+{% extends "labbd.html" %}
+{% block editorder %}
+<section>
+	<h3>Заказ №{{ order.getId }}</h3>
+	<form action="/labbd/orders/{{ order.getId }}/edit/update/" method="post">
+		{% csrf_token %}
+		{{ form }}
+		<input type="submit" class="button" value="Сохранить"></input>
+	</form>
+	<form action="/labbd/orders/{{ order.getId }}/">
+		<input type="submit" class="button" value="Отмена"></input>
+	</form>
+</section>
+{% endblock %}

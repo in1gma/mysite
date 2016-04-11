@@ -1,0 +1,18 @@
+{% extends "labbd.html" %}
+{% block hairstyle %}
+<section>
+	<h3>Прическа №{{ hairstyle.getId }}</h3>
+	<form action="/labbd/hairstyles/{{ hairstyle.getId }}/update/" method="post">
+		{% csrf_token %}
+		{{ form }}
+		<input type="submit" class="button" value="Сохранить"></input>
+	</form>
+	<!--form action="/labbd/hairstyles/">
+		<input type="submit" class="button" value="Отмена"></input>
+	</form-->
+	<form action="/labbd/hairstyles/{{ hairstyle.getId }}/delete/" method="post">
+		{% csrf_token %}
+		<input type="submit" class="button" value="Удалить"></input>
+	</form>
+</section>
+{% endblock %}

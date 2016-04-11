@@ -1,0 +1,9 @@
+{% extends "labbd.html" %}
+{% block query %}
+	<h3>Запрос №{{ number }}</h3>
+	<form action="/labbd/queries/{{ number }}/show/" method="post">
+		{% csrf_token %}
+		{{ form }}
+		<input type="submit" class="button" value="Выполнить"></input>
+	</form>
+{% endblock %}

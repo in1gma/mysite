@@ -1,0 +1,15 @@
+{% extends "labbd.html" %}
+{% block masters %}
+<section>
+	<h2>Список мастеров</h2>
+	<h4><a href="/labbd/masters/add/">Добавить мастера</a></h4>
+	{% for master in masters %}
+		<h3><a href="/labbd/masters/{{ master.getId }}">Мастер №{{ master.getId }}</a></h3>
+		<p>Фамилия: {{ master.surname }}</p>
+		<p>Имя: {{ master.name }}</p>
+		<p>Отчество: {{ master.patronymic }}</p>
+		<p>Стаж: {{ master.stage }}</p>
+		<hr>
+	{% endfor %}
+</section>
+{% endblock %}

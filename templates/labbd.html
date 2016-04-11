@@ -1,0 +1,50 @@
+{% load bootstrap3 %}
+
+{% bootstrap_css %}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Парикмахерская</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<link rel="stylesheet" type="text/css" href="/static/css/labbd.css">
+		<link href='https://fonts.googleapis.com/css?family=Marck+Script&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+		<header>
+			<h1>Парикмахерская</h1>
+		</header>
+		<nav>
+			<a class="nav-link" href="/labbd/">Главная</a>
+			<a class="nav-link" href="/labbd/orders/">Заказы</a>
+			<a class="nav-link" href="/labbd/clients/">Клиенты</a>
+			<a class="nav-link" href="/labbd/masters/">Мастера</a>
+			<a class="nav-link" href="/labbd/hairstyles/">Прически</a>
+			<a class="nav-link" href="/labbd/queries/">Запросы</a>
+		</nav>
+		<article>
+			{% block order %}{% endblock %}
+			{% block orders %}{% endblock %}
+			{% block addorder %}{% endblock %}
+			{% block editorder %}{% endblock %}
+
+			{% block client %}{% endblock %}
+			{% block clients %}{% endblock %}
+			{% block addclient %}{% endblock %}
+
+			{% block hairstyle %}{% endblock %}
+			{% block hairstyles %}{% endblock %}
+			{% block addhairstyle %}{% endblock %}
+
+			{% block master %}{% endblock %}
+			{% block masters %}{% endblock %}
+			{% block addmaster %}{% endblock %}
+
+			{% block queries %}{% endblock %}
+			{% block query %}{% endblock %}
+			{% block showquery %}{% endblock %}
+		</article>
+		<footer>
+		</footer>
+	</body>
+</html>

@@ -1,0 +1,18 @@
+{% extends "labbd.html" %}
+{% block client %}
+<section>
+	<h3>Клиент №{{ client.getId }}</h3>
+	<form action="/labbd/clients/{{ client.getId }}/update/" method="post">
+		{% csrf_token %}
+		{{ form }}
+		<input type="submit" class="button" value="Сохранить"></input>
+	</form>
+	<!--form action="/labbd/clients/">
+		<input type="submit" class="button" value="Отмена"></input>
+	</form-->
+	<form action="/labbd/clients/{{ client.getId }}/delete/" method="post">
+		{% csrf_token %}
+		<input type="submit" class="button" value="Удалить"></input>
+	</form>
+</section>
+{% endblock %}

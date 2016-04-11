@@ -1,0 +1,18 @@
+{% extends "labbd2_show_query.html" %}
+{% block query07 %}
+	<table border="1" width="30%">
+		<tr align="center">
+			<td><b>Клиент №</b></td>
+			<td><b>Фамилия</b></td>
+			<td><b>Потрачено</b></td>
+		</tr>
+		{% for obj in objs %}
+			<tr align="center">
+				<td>{{ obj.id }}</td>
+				<td>{{ obj.surname }}</td>
+				<td>{{ obj.summ }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+	<p>Время выполнения: {{ time }}</p>
+{% endblock %}

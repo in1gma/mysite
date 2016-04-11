@@ -1,0 +1,17 @@
+{% extends "labbd.html" %}
+{% block order %}
+	<h3>Заказ №{{ number }}</h3>
+	<p>Дата: {{ order.getDatetime }}</p>
+	<p>Клиент: <a href="/labbd/clients/{{ client.getId }}">{{ client }}</a></p>
+	<p>Прическа: <a href="/labbd/hairstyles/{{ hairstyle.getId }}">{{ hairstyle.title }}</a></p>
+	<p>Цена: {{ hairstyle.value }} руб.</p>
+	<p>Мастер: <a href="/labbd/masters/{{ master.getId }}">{{ master }}</a></p>
+	<form action="/labbd/orders/{{ order.getId }}/delete/" method="post">
+		{% csrf_token %}
+	<input type="submit" class="button" value="Удалить"></input>
+	</form>
+	<form action="/labbd/orders/{{ order.getId }}/edit/" method="post">
+		{% csrf_token %}
+		<input type="submit" class="button" value="Редактировать"></input>
+	</form>
+{% endblock %}

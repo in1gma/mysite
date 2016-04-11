@@ -1,0 +1,62 @@
+/*body {
+	margin-left: 5%;
+	margin-right: 5%;
+}*/
+
+h1 {
+	color: #e3c5bb;
+	font-size: 60px;
+	font-weight: bold;
+	font-family: 'Marck Script';
+	text-shadow: 1px 1px 1px #764248;
+}
+
+h2 {
+	color: #764248;
+	font-weight: bold;
+}
+
+h3 {
+	color: #72354a;
+}
+
+header {
+	background-color: #ffadc6;
+	margin-top: 0;
+	padding: 20px 20px 20px 40px;
+}
+
+nav {
+	background-color: #dda3b2;
+	padding: 20px;
+}
+
+.nav-link {
+	color: #636163;
+	font-size: 22px;
+	font-weight: bold;
+	font-family: 'Marck Script';
+}
+
+a {
+	color: #72354a;
+	text-decoration: underline;
+}
+
+article {
+	padding-left: 40px;
+}
+
+/*form {
+	margin: 0; 
+	padding: 0;
+}*/
+
+input, label, select {
+	display: block;
+	width: 15%;
+}
+
+.button {
+	margin-top: 20px;
+}

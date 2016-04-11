@@ -1,0 +1,29 @@
+{% extends "labbd.html" %}
+{% block orders %}
+<section>
+	<h2>Список заказов</h2>
+	<h4><a href="/labbd/orders/add/">Добавить заказ</a></h4>
+	{% for order in orders %}
+		<h3><a href="/labbd/orders/{{ order.getId }}">Заказ №{{ order.getId }}</a></h3>
+		<p>Дата: {{ order.getDatetime }}</p>
+		<p></p>
+		{% for client in clients %}
+			{% if order.getClientId == client.getId %}
+				<p>Клиент: {{ client }}</p>
+			{% endif %}
+		{% endfor %}
+		{% for hairstyle in hairstyles %}
+			{% if order.getHairstyleId == hairstyle.getId %}
+				<p>Прическа: {{ hairstyle.title }}</p>
+				<p>Цена: {{ hairstyle.value }} руб.</p>
+			{% endif %}
+		{% endfor %}
+		{% for master in masters %}
+			{% if order.getMasterId == master.getId %}
+				<p>Мастер: {{ master }}</p>
+			{% endif %}
+		{% endfor %}
+		<hr>
+	{% endfor %}
+</section>
+{% endblock %}

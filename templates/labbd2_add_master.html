@@ -1,0 +1,11 @@
+{% extends "labbd.html" %}
+{% block addmaster %}
+<section>
+	<h3>Добавить мастера</h3>
+	<form action="/labbd/masters/add/update/" method="post">
+		{% csrf_token %}
+		{{ form }}
+		<input type="submit" class="button" value="Добавить"></input>
+	</form>
+</section>
+{% endblock %}

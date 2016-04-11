@@ -1,0 +1,16 @@
+{% extends "labbd.html" %}
+{% block clients %}
+<section>
+	<h2>Список клиентов</h2>
+	<h4><a href="/labbd/clients/add/">Добавить клиента</a></h4>
+	{% for client in clients %}
+		<h3><a href="/labbd/clients/{{ client.getId }}">Клиент №{{ client.getId }}</a></h3>
+		<p>Фамилия: {{ client.surname }}</p>
+		<p>Имя: {{ client.name }}</p>
+		<p>Отчество: {{ client.patronymic }}</p>
+		<p>Возраст: {{ client.age }}</p>
+		<p>Тип волос: {{ client.hair }}</p>
+		<hr>
+	{% endfor %}
+</section>
+{% endblock %}
